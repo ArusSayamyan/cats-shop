@@ -1,13 +1,37 @@
 import React from "react";
 import "./app.scss";
 
-class App extends React.component {
+class App extends React.Component {
   state = {
-    search: "Narek",
+    search: "",
     cats: [
-      { name: "Marvin", email: "marvin@mail.com" },
-      { name: "Darvin", email: "marvin@mail.com" },
-      { name: "Harry Poter", email: "marvin@mail.com" },
+      { 
+        name: "Marvin",
+        email: "marvin@mail.com",
+        // url: "https://robohash.org/1?set=set4&size=180x180"
+      },
+      { 
+        name: "Darvin",
+        email: "marvin@mail.com",
+        // url: "https://robohash.org/2?set=set4&size=180x180",
+
+      },
+      { 
+        name: "Harry Poter",
+        email: "marvin@mail.com",
+        // url: "https://robohash.org/3?set=set4&size=180x180",
+
+      },
+      {
+        name: "Kitty",
+        email: "harry@mail.com",
+        // url: "https://robohash.org/3?set=set4&size=180x180",
+    },
+    {
+        name: "Petya",
+        email: "harry@mail.com",
+        // url: "https://robohash.org/3?set=set4&size=180x180",
+    },
     ],
   };
 
@@ -19,43 +43,49 @@ class App extends React.component {
   };
 
   render() {
-    const mySearchInputValue = this.state.search;
-    
-const filteredCatsData = this.state.cats.filter((cat) => {
-  return cat.name.includes(mySearchInputValue);
+    const mySearchInputValue = this.state.search.toLowerCase();
+    const filteredCatsData = this.state.cats.filter((cat) => {
+      const catLowerCaseName = cat.name.toLowerCase();
+      return catLowerCaseName.includes(mySearchInputValue);
 });
 
-console.log(filteredCatsData);
 
     return (
       <div className="app">
         <h1 className="app__header">Catty shop</h1>
         <div className="app__search">
-          <div>{this.state.name}</div>
+          
 
-          <input
-            className="app__search-input"
-            type="text"
-            name="search"
-            placeholder="Search cats"
-          />
-        </div>
+           <input
+              onChange={(event) => this.handleChange(event)}
+              value={this.state.search}
+              className="app__search-input"
+              type="text"
+              name="search"
+              placeholder="Search cats"/>
+          </div>
 
-        <main className="app__main">
-          <ul>
-            {mySearchInputValue.map((cat, idx) => {
-              return (
-                <li className="item__header">
-                  <div className="item">{cat.name}</div>
-                  <div>{cat.email}</div>
-                </li>
-              );
-            })}
-          </ul>
-        </main>
-      </div>
-    );
-  }
+           <main className="app__main">
+              <ul className="app__main-list">
+                    {filteredCatsData.map((cat, idx) => {
+                        return (
+                            <li className="item">
+                                 <img
+                                     src={`https://robohash.org/${idx + 1}?set=set4`}
+                                     alt="cat"
+                                    className="item__image"
+                                    />
+                                    <div className="item__header">{cat.name}</div>
+                                    <div>{cat.email}</div>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </main>
+            </div>
+        );
+    }
 }
+
 
 export default App;
